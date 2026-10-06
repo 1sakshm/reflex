@@ -2,9 +2,15 @@
 
 ## One-time setup
 
-1. **npm:** create the `reflex-ai` organization at npmjs.com (free for public packages). Create an automation token with publish rights and add it to the GitHub repo as the secret `NPM_TOKEN`, in an environment named `npm`.
-2. **PyPI:** for both `reflex-laya` and `reflex-agent-client`, add a *pending trusted publisher* at pypi.org (Account → Publishing): owner `1sakshm`, repo `reflex`, workflow `release.yml`, environment `pypi`.
-3. **GitHub:** create the environments `npm` and `pypi` (Settings → Environments). Optionally require a reviewer.
+1. **npm:** the `reflex-ai` organization must exist on npmjs.com. Publishing uses **npm Trusted Publishing** (GitHub OIDC), so no token or 2FA code is involved. npm only lets you add a trusted publisher to a package that already exists, so the **first version of each package is published by hand**:
+   ```bash
+   npm login
+   npm run build
+   for p in core server bench cli; do npm publish --workspace packages/$p --access public; done
+   ```
+   Then, for **each** of `@reflex-ai/core`, `@reflex-ai/server`, `@reflex-ai/bench`, `@reflex-ai/cli`: npmjs.com → package → Settings → **Trusted Publisher** → GitHub Actions, with owner `1sakshm`, repository `reflex`, workflow `release.yml`, environment `npm`.
+2. **PyPI:** for each of `reflex-laya` and `reflex-agent-client`, add a trusted publisher (a *pending* one if the project doesn't exist yet): owner `1sakshm`, repo `reflex`, workflow `release.yml`, environment `pypi`.
+3. **GitHub:** the `npm` and `pypi` environments are created automatically on first use. Optionally add a required reviewer to them. The `NPM_TOKEN` secret is no longer needed.
 
 ## Each release
 
@@ -15,7 +21,7 @@ npm install && npm run typecheck && npm test && npm run test:python && npm run b
 git commit -am "release: v0.2.0" && git tag v0.2.0 && git push && git push --tags
 ```
 
-The `release` workflow verifies the tag matches the package versions, reruns all tests and the packed-tarball smoke test, then publishes:
+The `release` workflow verifies the tag matches the package versions, reruns all tests and the packed-tarball smoke test, then publishes. Already-published versions are skipped, so a partly failed release can be re-run from the Actions tab (**release → Run workflow**):
 
 - npm, in dependency order with provenance
 - PyPI, via trusted publishing

@@ -1,9 +1,12 @@
 name: release
 
-# Push a tag like v0.1.0 (after `npm run version:set -- 0.1.0` and a CHANGELOG entry).
+# Publish when a version tag is pushed (v0.2.0 after `npm run version:set -- 0.2.0`),
+# or re-run manually from the Actions tab. Every publish step is idempotent: versions that
+# are already on npm/PyPI are skipped, so a partially failed release can simply be re-run.
 on:
   push:
     tags: ["v*"]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -11,6 +14,8 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -21,13 +26,18 @@ jobs:
         with:
           python-version: "3.12"
       - run: npm ci
-      - name: Tag matches package versions
+      - id: version
+        name: Resolve version (tag must match every package)
         run: |
-          TAG="${GITHUB_REF_NAME#v}"
-          for p in core server bench cli; do
-            V=$(node -p "require('./packages/$p/package.json').version")
-            [ "$V" = "$TAG" ] || { echo "packages/$p is $V, tag is $TAG"; exit 1; }
+          V=$(node -p "require('./packages/core/package.json').version")
+          for p in server bench cli; do
+            P=$(node -p "require('./packages/$p/package.json').version")
+            [ "$P" = "$V" ] || { echo "packages/$p is $P but core is $V"; exit 1; }
           done
+          if [ "${GITHUB_REF_TYPE}" = "tag" ] && [ "${GITHUB_REF_NAME#v}" != "$V" ]; then
+            echo "tag ${GITHUB_REF_NAME} does not match package version $V"; exit 1
+          fi
+          echo "version=$V" >> "$GITHUB_OUTPUT"
       - run: npm run typecheck && npm test && npm run test:python && npm run build
       - run: node scripts/smoke-test.mjs
 
@@ -37,7 +47,7 @@ jobs:
     environment: npm
     permissions:
       contents: read
-      id-token: write   # npm provenance
+      id-token: write # npm Trusted Publishing (OIDC): no token, provenance included
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -45,43 +55,56 @@ jobs:
           node-version: 24
           registry-url: https://registry.npmjs.org
           cache: npm
+      - name: npm with trusted-publishing support (≥ 11.5.1)
+        run: npm install -g npm@^11.5.1
       - run: npm ci && npm run build
-      # Dependency order: core → server, bench → cli
-      - run: npm publish --workspace packages/core --provenance --access public
-        env: { NODE_AUTH_TOKEN: "${{ secrets.NPM_TOKEN }}" }
-      - run: npm publish --workspace packages/server --provenance --access public
-        env: { NODE_AUTH_TOKEN: "${{ secrets.NPM_TOKEN }}" }
-      - run: npm publish --workspace packages/bench --provenance --access public
-        env: { NODE_AUTH_TOKEN: "${{ secrets.NPM_TOKEN }}" }
-      - run: npm publish --workspace packages/cli --provenance --access public
-        env: { NODE_AUTH_TOKEN: "${{ secrets.NPM_TOKEN }}" }
+      - name: Publish in dependency order (skip versions already on npm)
+        run: |
+          for p in core server bench cli; do
+            NAME=$(node -p "require('./packages/$p/package.json').name")
+            VERSION=$(node -p "require('./packages/$p/package.json').version")
+            if npm view "$NAME@$VERSION" version >/dev/null 2>&1; then
+              echo "$NAME@$VERSION already published, skipping"
+            else
+              npm publish --workspace "packages/$p" --access public
+            fi
+          done
 
   pypi:
     needs: verify
     runs-on: ubuntu-latest
     environment: pypi
     permissions:
-      id-token: write   # PyPI trusted publishing (no API token needed)
+      id-token: write # PyPI Trusted Publishing
+    strategy:
+      fail-fast: false
+      # One job per project: a trusted-publishing token can create at most one new PyPI project.
+      matrix:
+        package: [reflex-laya, reflex-agent-client]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - run: pip install build
-      - run: python -m build python/reflex-laya -o dist && python -m build python/reflex-agent-client -o dist
+      - run: python -m build python/${{ matrix.package }} -o dist
       - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          skip-existing: true
 
   github-release:
-    needs: [npm, pypi]
+    needs: [verify, npm, pypi]
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: Create GitHub release from CHANGELOG
+      - name: Create GitHub release from CHANGELOG (if missing)
         env:
           GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.verify.outputs.version }}
         run: |
-          VERSION="${GITHUB_REF_NAME#v}"
-          awk "/^## \[$VERSION\]/{flag=1;next}/^## \[/{flag=0}flag" CHANGELOG.md > notes.md
-          gh release create "$GITHUB_REF_NAME" --title "Reflex $GITHUB_REF_NAME" --notes-file notes.md
+          TAG="v$VERSION"
+          if gh release view "$TAG" >/dev/null 2>&1; then echo "release $TAG exists"; exit 0; fi
+          awk "/^## \\[$VERSION\\]/{flag=1;next}/^## \\[/{flag=0}flag" CHANGELOG.md > notes.md
+          gh release create "$TAG" --title "Reflex $TAG" --notes-file notes.md --verify-tag

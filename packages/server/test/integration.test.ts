@@ -7,21 +7,24 @@ import { action, createReflex, MemorySink } from "@reflex-ai/core";
 const python = process.env.REFLEX_PYTHON ?? (process.platform === "win32" ? "python" : "python3");
 const hasPython = spawnSync(python, ["--version"]).status === 0;
 
-test("TS runtime → Python Laya sidecar (mock scorer) → model-tier decision", { skip: !hasPython && "python not available" }, async () => {
+test("TS runtime → Python Laya sidecar (mock scorer) → model-tier decision", { skip: !hasPython && "python not available", timeout: 90_000 }, async () => {
   const child = spawn(python, ["-m", "reflex_laya", "--mock", "--port", "0"], {
     cwd: join(import.meta.dirname, "..", "..", "..", "python", "reflex-laya"),
   });
   try {
+    let stderr = "";
     const url = await new Promise<string>((resolve, reject) => {
-      const timer = setTimeout(() => reject(new Error("sidecar did not start")), 10_000);
+      // CI runners (macOS especially) can be slow to cold-start Python.
+      const timer = setTimeout(() => reject(new Error(`sidecar did not start within 45 s. stderr:\n${stderr}`)), 45_000);
       child.stderr.on("data", (chunk: Buffer) => {
-        const match = /listening on (http:\/\/\S+)/.exec(chunk.toString());
+        stderr += chunk.toString();
+        const match = /listening on (http:\/\/\S+)/.exec(stderr);
         if (match?.[1]) {
           clearTimeout(timer);
           resolve(match[1]);
         }
       });
-      child.on("exit", (code) => reject(new Error(`sidecar exited ${code}`)));
+      child.on("exit", (code) => reject(new Error(`sidecar exited ${code}. stderr:\n${stderr}`)));
     });
     const reflex = createReflex({
       workload: "integration",
