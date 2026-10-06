@@ -39,7 +39,11 @@
   <main id="top">
     <!-- ─────────────────────────── Hero ─────────────────────────── -->
     <section class="hero" aria-labelledby="hero-title">
-      <div id="hero-canvas" class="hero__canvas" aria-hidden="true"></div>
+      <div class="hero__visual" aria-hidden="true">
+        <div class="hero__halo"></div>
+        <canvas data-orb="searching" data-orb-fill></canvas>
+        <p class="hero__readout"><span class="hero__pulse"></span><span data-readout>AUTO · read_file · 0.021 ms</span></p>
+      </div>
       <div class="aura aura--a" aria-hidden="true"></div>
       <div class="aura aura--b" aria-hidden="true"></div>
 
@@ -71,11 +75,6 @@
         </div>
       </div>
 
-      <div class="hero__stamp" aria-hidden="true">
-        <svg viewBox="0 0 120 120"><defs><path id="circ" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/></defs>
-          <text><textPath href="#circ">THINK LESS · ACT INSTANTLY · THINK LESS · ACT INSTANTLY · </textPath></text></svg>
-        <span>✦</span>
-      </div>
     </section>
 
     <!-- ─────────────────────────── Ticker ─────────────────────────── -->
@@ -391,15 +390,12 @@ args = [<span class="s">"-y"</span>, <span class="s">"@reflex-ai/cli"</span>, <s
       <div><span class="label">Project</span><a href="https://github.com/1sakshm/reflex" target="_blank" rel="noopener">GitHub</a><a href="https://github.com/1sakshm/reflex/blob/main/PRD.md" target="_blank" rel="noopener">Product spec</a><a href="https://github.com/1sakshm/reflex/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Changelog</a></div>
       <div><span class="label">Docs</span><a href="https://github.com/1sakshm/reflex/blob/main/docs/getting-started.md" target="_blank" rel="noopener">Getting started</a><a href="https://github.com/1sakshm/reflex/blob/main/docs/concepts.md" target="_blank" rel="noopener">Concepts</a><a href="https://github.com/1sakshm/reflex/blob/main/docs/integrations.md" target="_blank" rel="noopener">Integrations</a></div>
       <div><span class="label">Packages</span><a href="https://www.npmjs.com/package/@reflex-ai/core" target="_blank" rel="noopener">npm</a><a href="https://pypi.org/project/reflex-agent-client/" target="_blank" rel="noopener">PyPI</a><a href="https://github.com/1sakshm/reflex/releases" target="_blank" rel="noopener">Releases</a></div>
-      <div class="footer__fine"><span class="label">Colophon</span><p>Set in Instrument Serif, Inter Tight &amp; JetBrains Mono. Painted live with p5.brush. Orbs by thinking-orbs. Apache-2.0 · © 2026 Saksham Sharma.</p></div>
+      <div class="footer__fine"><span class="label">Colophon</span><p>Set in Instrument Serif, Inter Tight &amp; JetBrains Mono. Orbs by thinking-orbs. Apache-2.0 · © 2026 Saksham Sharma.</p></div>
     </div>
   </footer>
 
   <div class="toast" role="status" aria-live="polite"></div>
 
-  <script src="https://cdn.jsdelivr.net/npm/p5@2.2/lib/p5.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/p5.brush@2.2.2/dist/p5.brush.js" defer></script>
-  <script src="js/hero.js" defer></script>
   <script type="module" src="js/orbs.js"></script>
   <script src="js/main.js" defer></script>
 </body>

@@ -75,6 +75,29 @@
     });
   });
 
+  // Hero readout: a quiet stream of the kinds of decisions Reflex makes.
+  const readout = document.querySelector("[data-readout]");
+  const lines = [
+    "AUTO · read_file · 0.021 ms",
+    "AUTO · retry_backoff · 0.018 ms",
+    "ESCALATE · needs reasoning",
+    "AUTO · run_tests · 0.034 ms",
+    "RISK · deploy · never auto-run",
+    "AUTO · use_cache · 0.012 ms",
+    "AUTO · stop · tests passed",
+  ];
+  if (readout && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    let i = 0;
+    setInterval(() => {
+      readout.classList.add("is-swapping");
+      setTimeout(() => {
+        i = (i + 1) % lines.length;
+        readout.textContent = lines[i];
+        readout.classList.remove("is-swapping");
+      }, 350);
+    }, 2200);
+  }
+
   // Count-up for the big race number.
   const fmt = new Intl.NumberFormat("en-US");
   const counter = new IntersectionObserver(

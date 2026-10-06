@@ -6,9 +6,12 @@ const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const dpr = Math.min(2, window.devicePixelRatio || 1);
 const orbs = [];
 
+/** Hero orbs (`data-orb-fill`) take the size of their container; others use data-orb-size. */
+const fillSize = (canvas) => Math.max(120, Math.floor(Math.min(canvas.parentElement.clientWidth, canvas.parentElement.clientHeight) * 0.86));
+
 for (const canvas of document.querySelectorAll("canvas[data-orb]")) {
   const state = canvas.dataset.orb;
-  const cssSize = Number(canvas.dataset.orbSize || 64);
+  const cssSize = "orbFill" in canvas.dataset ? fillSize(canvas) : Number(canvas.dataset.orbSize || 64);
   // Presets exist for 20 and 64; the big orbs use the detailed 64 profile, drawn larger.
   const { mode, speed, opts } = resolvePreset(state, cssSize <= 32 ? 20 : 64);
   const draw = MODE_DRAWS[mode];
@@ -21,6 +24,22 @@ for (const canvas of document.querySelectorAll("canvas[data-orb]")) {
   const dark = !!canvas.closest(".section--dark, .closing");
   orbs.push({ canvas, ctx, draw, speed, opts, cssSize, dark, visible: false, offset: Math.random() * 10 });
 }
+
+// Keep fill-sized orbs matched to their container.
+let resizeTimer;
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    for (const orb of orbs) {
+      if (!("orbFill" in orb.canvas.dataset)) continue;
+      orb.cssSize = fillSize(orb.canvas);
+      orb.canvas.width = orb.cssSize * dpr;
+      orb.canvas.height = orb.cssSize * dpr;
+      orb.canvas.style.width = orb.cssSize + "px";
+      orb.canvas.style.height = orb.cssSize + "px";
+    }
+  }, 150);
+});
 
 const io = new IntersectionObserver(
   (entries) => {
