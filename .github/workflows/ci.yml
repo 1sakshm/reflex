@@ -1,0 +1,78 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: test (${{ matrix.os }}, node ${{ matrix.node }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node: [22, 24]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run test:python
+      - run: npm run build
+      - name: Benchmark smoke test
+        run: node packages/cli/dist/bin.js bench --tasks 100 --seed 42
+
+  package:
+    name: release smoke test (packed tarballs, fresh install)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: node scripts/smoke-test.mjs
+
+  node22-min:
+    name: built package on early Node 22 (22.12)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci && npm run build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.12"
+      - name: CLI and library work on Node 22.12 (dist only, no type stripping)
+        run: |
+          node packages/cli/dist/bin.js --version
+          node packages/cli/dist/bin.js bench --suite sim-coding --tasks 50
+          node -e "import('@reflex-ai/core').then(async ({createReflex, action, NullSink}) => { const r = createReflex({workload:'n22', sink: new NullSink()}); const d = await r.decide({point:'p', state:{}, actions:[action.stop()]}); console.log('decide ok:', d.type); })"
+
+  python-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install build twine
+      - run: python -m build python/reflex-laya -o dist && python -m build python/reflex-agent-client -o dist
+      - run: twine check dist/*

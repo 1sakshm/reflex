@@ -1,0 +1,12 @@
+{
+  "name": "reflex",
+  "description": "Reflex: a fast local System-1 decision runtime for AI agents.",
+  "owner": { "name": "Saksham Sharma" },
+  "plugins": [
+    {
+      "name": "reflex",
+      "source": "./plugins/claude-code",
+      "description": "Blocks unchanged re-reads, duplicate fetches and tool-call loops; gates destructive commands; adds Reflex MCP tools."
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "name": "reflex",
+  "displayName": "Reflex",
+  "version": "0.1.0",
+  "description": "Fast System-1 reflexes for Claude Code: blocks unchanged re-reads, duplicate fetches and tool-call loops, gates destructive commands, and adds the Reflex MCP decision tools.",
+  "author": { "name": "Saksham Sharma" },
+  "license": "Apache-2.0",
+  "keywords": ["efficiency", "cost", "routing", "safety", "mcp"]
+}

@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "reflex": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@reflex-ai/cli@0.1.0",
+        "mcp",
+        "--workload",
+        "claude-code-mcp",
+        "--data-dir",
+        "~/.reflex"
+      ]
+    }
+  }
+}

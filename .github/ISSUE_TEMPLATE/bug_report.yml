@@ -1,0 +1,30 @@
+name: Bug report
+description: Something doesn't work as documented
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal reproduction
+      description: Code, config and the `decide()` request if possible. Please remove secrets.
+      render: ts
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: Output of `npx reflex --version`, `node --version`, OS
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options: [core runtime, CLI, sidecar / MCP, Claude Code plugin, Laya sidecar (Python), Python client, benchmarks, docs]

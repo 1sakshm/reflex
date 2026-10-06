@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "reflex-agent-client"
+version = "0.1.0"
+description = "Python client for the Reflex sidecar (`reflex serve`)."
+requires-python = ">=3.10"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+readme = "README.md"
+authors = [{ name = "Saksham Sharma" }]
+keywords = ["ai", "agents", "llm", "routing", "system-1", "reflex"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/1sakshm/reflex"
+Issues = "https://github.com/1sakshm/reflex/issues"
+
+[tool.setuptools]
+packages = ["reflex_agent"]

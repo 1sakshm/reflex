@@ -1,0 +1,8 @@
+Reflex
+Copyright 2026 Saksham Sharma
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+Optional integration: Laya (https://huggingface.co/convaiinnovations/laya),
+licensed under the Apache License, Version 2.0, is not bundled; it is installed
+separately via the `reflex-laya[laya]` Python extra.

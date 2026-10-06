@@ -1,0 +1,87 @@
+name: release
+
+# Push a tag like v0.1.0 (after `npm run version:set -- 0.1.0` and a CHANGELOG entry).
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: npm ci
+      - name: Tag matches package versions
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          for p in core server bench cli; do
+            V=$(node -p "require('./packages/$p/package.json').version")
+            [ "$V" = "$TAG" ] || { echo "packages/$p is $V, tag is $TAG"; exit 1; }
+          done
+      - run: npm run typecheck && npm test && npm run test:python && npm run build
+      - run: node scripts/smoke-test.mjs
+
+  npm:
+    needs: verify
+    runs-on: ubuntu-latest
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write   # npm provenance
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          cache: npm
+      - run: npm ci && npm run build
+      # Dependency order: core → server, bench → cli
+      - run: npm publish --workspace packages/core --provenance --access public
+        env: { NODE_AUTH_TOKEN: "${{ secrets.NPM_TOKEN }}" }
+      - run: npm publish --workspace packages/server --provenance --access public
+        env: { NODE_AUTH_TOKEN: "${{ secrets.NPM_TOKEN }}" }
+      - run: npm publish --workspace packages/bench --provenance --access public
+        env: { NODE_AUTH_TOKEN: "${{ secrets.NPM_TOKEN }}" }
+      - run: npm publish --workspace packages/cli --provenance --access public
+        env: { NODE_AUTH_TOKEN: "${{ secrets.NPM_TOKEN }}" }
+
+  pypi:
+    needs: verify
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write   # PyPI trusted publishing (no API token needed)
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install build
+      - run: python -m build python/reflex-laya -o dist && python -m build python/reflex-agent-client -o dist
+      - uses: pypa/gh-action-pypi-publish@release/v1
+
+  github-release:
+    needs: [npm, pypi]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create GitHub release from CHANGELOG
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          awk "/^## \[$VERSION\]/{flag=1;next}/^## \[/{flag=0}flag" CHANGELOG.md > notes.md
+          gh release create "$GITHUB_REF_NAME" --title "Reflex $GITHUB_REF_NAME" --notes-file notes.md

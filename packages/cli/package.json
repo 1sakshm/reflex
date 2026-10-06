@@ -1,0 +1,65 @@
+{
+  "name": "@reflex-ai/cli",
+  "version": "0.1.0",
+  "description": "Reflex CLI: init, doctor, trace, eval, train, promote, serve, mcp, bench.",
+  "keywords": [
+    "ai",
+    "agents",
+    "llm",
+    "routing",
+    "system-1",
+    "decision",
+    "mcp",
+    "claude",
+    "cost",
+    "latency",
+    "cli"
+  ],
+  "license": "Apache-2.0",
+  "author": "Saksham Sharma",
+  "homepage": "https://github.com/1sakshm/reflex#readme",
+  "bugs": {
+    "url": "https://github.com/1sakshm/reflex/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1sakshm/reflex.git",
+    "directory": "packages/cli"
+  },
+  "type": "module",
+  "bin": {
+    "reflex": "./dist/bin.js"
+  },
+  "exports": {
+    ".": {
+      "reflex-source": "./src/bin.ts",
+      "default": "./dist/bin.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@reflex-ai/bench": "0.1.0",
+    "@reflex-ai/core": "0.1.0",
+    "@reflex-ai/server": "0.1.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "peerDependencies": {
+    "@types/node": ">=22"
+  },
+  "peerDependenciesMeta": {
+    "@types/node": {
+      "optional": true
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "name": "@reflex-ai/core",
+  "version": "0.1.0",
+  "description": "Reflex core: a local, ultra-fast System-1 decision runtime for AI agents.",
+  "keywords": [
+    "ai",
+    "agents",
+    "llm",
+    "routing",
+    "system-1",
+    "decision",
+    "mcp",
+    "claude",
+    "cost",
+    "latency"
+  ],
+  "license": "Apache-2.0",
+  "author": "Saksham Sharma",
+  "homepage": "https://github.com/1sakshm/reflex#readme",
+  "bugs": {
+    "url": "https://github.com/1sakshm/reflex/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1sakshm/reflex.git",
+    "directory": "packages/core"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "reflex-source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "peerDependencies": {
+    "@types/node": ">=22"
+  },
+  "peerDependenciesMeta": {
+    "@types/node": {
+      "optional": true
+    }
+  }
+}

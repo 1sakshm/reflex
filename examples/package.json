@@ -1,0 +1,16 @@
+{
+  "name": "reflex-examples",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "quickstart": "node --conditions=reflex-source quickstart.ts",
+    "claude-agent": "node --conditions=reflex-source claude-coding-agent.ts",
+    "stats": "node --conditions=reflex-source ../packages/cli/src/bin.ts stats",
+    "train": "node --conditions=reflex-source ../packages/cli/src/bin.ts train --promote"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "latest",
+    "@reflex-ai/core": "0.1.0"
+  }
+}

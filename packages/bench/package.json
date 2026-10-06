@@ -1,0 +1,55 @@
+{
+  "name": "@reflex-ai/bench",
+  "version": "0.1.0",
+  "description": "ReflexBench: agent-level efficiency benchmarks for Reflex.",
+  "keywords": [
+    "ai",
+    "agents",
+    "llm",
+    "routing",
+    "system-1",
+    "decision",
+    "mcp",
+    "claude",
+    "cost",
+    "latency",
+    "benchmark"
+  ],
+  "license": "Apache-2.0",
+  "author": "Saksham Sharma",
+  "homepage": "https://github.com/1sakshm/reflex#readme",
+  "bugs": {
+    "url": "https://github.com/1sakshm/reflex/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1sakshm/reflex.git",
+    "directory": "packages/bench"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "reflex-source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@reflex-ai/core": "0.1.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}

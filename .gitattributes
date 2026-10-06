@@ -1,0 +1,7 @@
+# Store LF in the repository on every platform (shebang scripts must not get CRLF).
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.gif binary
+*.tgz binary
+*.whl binary

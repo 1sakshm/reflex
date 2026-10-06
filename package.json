@@ -1,0 +1,33 @@
+{
+  "name": "reflex-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Reflex: a local, ultra-fast System-1 decision runtime for AI agents.",
+  "license": "Apache-2.0",
+  "workspaces": [
+    "packages/*",
+    "examples"
+  ],
+  "scripts": {
+    "build": "tsc -b packages/core packages/server packages/bench packages/cli",
+    "typecheck": "tsc -b packages/core packages/server packages/bench packages/cli && tsc -p examples",
+    "clean": "tsc -b --clean packages/core packages/server packages/bench packages/cli",
+    "test": "node --conditions=reflex-source --test \"packages/*/test/*.test.ts\" \"plugins/claude-code/test/*.test.mjs\"",
+    "reflex": "node --conditions=reflex-source packages/cli/src/bin.ts",
+    "bench": "node --conditions=reflex-source packages/cli/src/bin.ts bench",
+    "test:python": "python -m unittest discover -s python/tests -v",
+    "version:set": "node scripts/set-version.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "~5.9.3"
+  },
+  "engines": {
+    "node": ">=22.18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1sakshm/reflex.git"
+  }
+}
