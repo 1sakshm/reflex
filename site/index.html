@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reflex · System One for AI Agents</title>
+  <meta name="description" content="Reflex is a local, ultra-fast System-1 decision runtime for AI agents. It makes the routine decisions in microseconds and wakes the frontier model only when real thinking is needed. Open source, Apache-2.0." />
+  <meta name="theme-color" content="#f3efe6" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Reflex · System One for AI Agents" />
+  <meta property="og:description" content="Stop using a frontier model to make a three-option decision. Reflex decides in 0.02 ms, on your machine." />
+  <meta property="og:image" content="https://1sakshm.github.io/reflex/assets/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ─────────────────────────── Masthead ─────────────────────────── -->
+  <header class="masthead">
+    <a class="wordmark" href="#top" aria-label="Reflex home">Reflex<sup>®</sup></a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#manifesto">Manifesto</a>
+      <a href="#two-minds">Two minds</a>
+      <a href="#ladder">The ladder</a>
+      <a href="#install">Install</a>
+      <a href="#numbers">Numbers</a>
+    </nav>
+    <a class="pill pill--ghost" href="https://github.com/1sakshm/reflex" target="_blank" rel="noopener">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.22 1.88.87 2.34.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.96 0-.87.31-1.59.83-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.08-1.87 3.75-3.66 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg>
+      GitHub
+    </a>
+  </header>
+
+  <main id="top">
+    <!-- ─────────────────────────── Hero ─────────────────────────── -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div id="hero-canvas" class="hero__canvas" aria-hidden="true"></div>
+      <div class="aura aura--a" aria-hidden="true"></div>
+      <div class="aura aura--b" aria-hidden="true"></div>
+
+      <div class="hero__meta label">
+        <span>Nº 001 — System One</span>
+        <span>Open source · Apache-2.0</span>
+        <span>v0.1.0 · October 2026</span>
+      </div>
+
+      <h1 id="hero-title" class="hero__title">
+        <span class="line"><span>The nervous</span></span>
+        <span class="line"><span>system for</span></span>
+        <span class="line"><span><em>AI agents.</em></span></span>
+      </h1>
+
+      <div class="hero__foot">
+        <p class="hero__lede">
+          Your agent asks a frontier model hundreds of tiny questions — <i>which tool, search or not, retry, stop?</i>
+          Reflex answers them on your machine in <strong>0.02&nbsp;ms</strong>, and only wakes the big model when there is
+          something worth thinking about.
+        </p>
+        <div class="hero__cta">
+          <button class="install" data-copy="npm i @reflex-ai/core" aria-label="Copy install command">
+            <span class="install__prompt">$</span>
+            <span class="install__cmd">npm i @reflex-ai/core</span>
+            <span class="install__icon" aria-hidden="true">⧉</span>
+          </button>
+          <a class="link-arrow" href="#manifesto">Read the manifesto <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+
+      <div class="hero__stamp" aria-hidden="true">
+        <svg viewBox="0 0 120 120"><defs><path id="circ" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/></defs>
+          <text><textPath href="#circ">THINK LESS · ACT INSTANTLY · THINK LESS · ACT INSTANTLY · </textPath></text></svg>
+        <span>✦</span>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────── Ticker ─────────────────────────── -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker__track">
+        <span><b>AUTO</b> read_file(src/date.ts) · 0.021 ms</span>
+        <span><b>AUTO</b> retry_backoff · 0.018 ms</span>
+        <span><i>ESCALATE</i> difficulty → frontier</span>
+        <span><b>AUTO</b> run_tests · 0.034 ms</span>
+        <span><i>RISK</i> deploy · never auto-executed</span>
+        <span><b>AUTO</b> use_cache · 0.012 ms</span>
+        <span><b>AUTO</b> stop · tests passed</span>
+        <span><i>AUDIT</i> 1 in 50 → System 2</span>
+        <span><b>AUTO</b> read_file(src/date.ts) · 0.021 ms</span>
+        <span><b>AUTO</b> retry_backoff · 0.018 ms</span>
+        <span><i>ESCALATE</i> difficulty → frontier</span>
+        <span><b>AUTO</b> run_tests · 0.034 ms</span>
+        <span><i>RISK</i> deploy · never auto-executed</span>
+        <span><b>AUTO</b> use_cache · 0.012 ms</span>
+        <span><b>AUTO</b> stop · tests passed</span>
+        <span><i>AUDIT</i> 1 in 50 → System 2</span>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────── Manifesto ─────────────────────────── -->
+    <section id="manifesto" class="manifesto section">
+      <div class="section__head">
+        <span class="label">I.</span>
+        <span class="label">The Manifesto</span>
+      </div>
+      <blockquote class="manifesto__quote reveal">
+        Stop using a <em>hundreds-of-billions-of-parameters</em> reasoning model to make a
+        <span class="underline">three-option decision.</span>
+      </blockquote>
+      <div class="manifesto__cols">
+        <p class="dropcap reveal">
+          Every agent you have ever shipped spends most of its life making reflexes. Re-run the tests. Open the file in the
+          stack trace. Back off after a 429. Stop when everything is green. Each of those tiny choices is routed through a
+          frontier model — seconds of latency, thousands of tokens, real dollars — to produce an answer a spinal cord could have given.
+        </p>
+        <p class="reveal">
+          Reflex is the spinal cord. A local runtime that sits inside your agent loop, scores the candidate actions in
+          microseconds, returns a <em>calibrated</em> confidence, and acts only when it is sure and the action is safe.
+          Everything else — the ambiguous, the novel, the dangerous — goes straight to System&nbsp;2. And every time the
+          big model decides, Reflex quietly learns how.
+        </p>
+      </div>
+      <div class="facts reveal">
+        <div><span class="facts__n">0.021<small>ms</small></span><span class="label">decision, p50, laptop CPU</span></div>
+        <div><span class="facts__n">0</span><span class="label">runtime dependencies</span></div>
+        <div><span class="facts__n">0</span><span class="label">bytes leave your machine</span></div>
+        <div><span class="facts__n">∞</span><span class="label">destructive actions it will never auto-run</span></div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────── Two minds (dark) ─────────────────────────── -->
+    <section id="two-minds" class="minds section section--dark">
+      <div class="section__head">
+        <span class="label">II.</span>
+        <span class="label">Two minds</span>
+      </div>
+      <h2 class="display reveal">Fast enough to be <em>instinct.</em><br />Humble enough to <em>ask.</em></h2>
+
+      <div class="minds__grid">
+        <article class="mind reveal">
+          <div class="mind__orb"><canvas data-orb="working" data-orb-size="150"></canvas></div>
+          <span class="label">System 1 · Reflex</span>
+          <h3>Instinct</h3>
+          <p>Rules, an exact-decision cache, learned trajectory patterns and a tiny online model. Answers in
+            <strong>microseconds</strong>, on your CPU, with calibrated confidence.</p>
+          <dl class="mind__stats">
+            <div><dt>Latency</dt><dd>0.02 ms</dd></div>
+            <div><dt>Cost</dt><dd>$0</dd></div>
+            <div><dt>Where</dt><dd>Your machine</dd></div>
+          </dl>
+        </article>
+        <article class="mind reveal">
+          <div class="mind__orb"><canvas data-orb="solving" data-orb-size="150"></canvas></div>
+          <span class="label">System 2 · Frontier model</span>
+          <h3>Deliberation</h3>
+          <p>Claude, GPT, Gemini — summoned only for the steps that need real reasoning, with Reflex’s top hints attached.
+            Its choices become Reflex’s next lesson.</p>
+          <dl class="mind__stats">
+            <div><dt>Latency</dt><dd>1 – 5 s</dd></div>
+            <div><dt>Cost</dt><dd>Real money</dd></div>
+            <div><dt>Where</dt><dd>Someone’s datacenter</dd></div>
+          </dl>
+        </article>
+      </div>
+
+      <div class="race reveal">
+        <p class="race__line">While your frontier model thinks <em>once</em>,</p>
+        <p class="race__count"><span data-count-to="100000">100,000</span></p>
+        <p class="race__line">reflexes could have fired.<sup>†</sup></p>
+      </div>
+      <p class="footnote">† 2 s typical frontier step ÷ 0.02 ms Reflex p50 (measured by <code>reflex doctor</code> on a laptop CPU).</p>
+
+      <div class="orb-row reveal" aria-label="Agent states">
+        <figure><canvas data-orb="searching" data-orb-size="64"></canvas><figcaption>searching</figcaption></figure>
+        <figure><canvas data-orb="connecting" data-orb-size="64"></canvas><figcaption>connecting</figcaption></figure>
+        <figure><canvas data-orb="weaving" data-orb-size="64"></canvas><figcaption>weaving</figcaption></figure>
+        <figure><canvas data-orb="composing" data-orb-size="64"></canvas><figcaption>composing</figcaption></figure>
+        <figure><canvas data-orb="breathing" data-orb-size="64"></canvas><figcaption>breathing</figcaption></figure>
+        <figure><canvas data-orb="shaping" data-orb-size="64"></canvas><figcaption>shaping</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────── The ladder ─────────────────────────── -->
+    <section id="ladder" class="ladder section">
+      <div class="section__head">
+        <span class="label">III.</span>
+        <span class="label">The decision ladder</span>
+      </div>
+      <h2 class="display reveal">Every decision climbs.<br /><em>Most never reach the top.</em></h2>
+      <p class="section__lede reveal">Reflex tries the cheapest rung first and stops at the first one that is confident enough.
+        The expensive rungs only run when the cheap ones can’t decide.</p>
+
+      <ol class="rungs">
+        <li class="rung reveal"><span class="rung__n">0</span><div><h4>Kill switch &amp; mode</h4><p><code>REFLEX_DISABLE=1</code> and shadow mode win over everything.</p></div><span class="rung__t">&lt; 0.1 ms</span></li>
+        <li class="rung reveal"><span class="rung__n">1</span><div><h4>Rules</h4><p>Force, deny, allow-only, require-escalation. Budgets and loop detection. Deterministic, always first.</p></div><span class="rung__t">&lt; 0.5 ms</span></li>
+        <li class="rung reveal"><span class="rung__n">2</span><div><h4>Exact decision cache</h4><p>This precise state was decided before — at least three times.</p></div><span class="rung__t">&lt; 0.5 ms</span></li>
+        <li class="rung reveal"><span class="rung__n">3</span><div><h4>Trajectory patterns</h4><p>“After the tests fail with an ImportError, read the imported file.”</p></div><span class="rung__t">&lt; 1 ms</span></li>
+        <li class="rung reveal"><span class="rung__n">4</span><div><h4>The head</h4><p>An online model over hashed state × action features. It even learns <em>which</em> file to open.</p></div><span class="rung__t">~0.02 ms</span></li>
+        <li class="rung reveal"><span class="rung__n">5</span><div><h4>Full model <span class="tag">optional</span></h4><p>Laya scores every candidate in one non-autoregressive pass. Bring a GPU.</p></div><span class="rung__t">~33 ms GPU</span></li>
+        <li class="rung rung--top reveal"><span class="rung__n">✦</span><div><h4>Escalate</h4><p>Your frontier model — or a human — with the top hints attached. Then Reflex learns from the answer.</p></div><span class="rung__t">seconds</span></li>
+      </ol>
+    </section>
+
+    <!-- ─────────────────────────── Learning ─────────────────────────── -->
+    <section class="learn section">
+      <div class="section__head">
+        <span class="label">IV.</span>
+        <span class="label">How it learns</span>
+      </div>
+      <h2 class="display reveal">Watch. <em>Learn.</em> Act.</h2>
+      <div class="steps">
+        <article class="step reveal">
+          <span class="step__n">01</span>
+          <h3>Shadow</h3>
+          <p>Reflex rides along and never acts. Your frontier model decides as always; every choice becomes a label.</p>
+          <pre class="term"><code>mode: <span class="s">"shadow"</span></code></pre>
+        </article>
+        <article class="step reveal">
+          <span class="step__n">02</span>
+          <h3>Train</h3>
+          <p>Fit calibration on one held-out slice, report on another, promote only if precision clears a 95% confidence bound.</p>
+          <pre class="term"><code><span class="p">$</span> npx reflex train --promote
+<span class="c">✔ promoted v1</span></code></pre>
+        </article>
+        <article class="step reveal">
+          <span class="step__n">03</span>
+          <h3>Auto</h3>
+          <p>Routine steps run locally. One in fifty confident calls is still audited by System 2, so drift never hides.</p>
+          <pre class="term"><code>mode: <span class="s">"auto"</span>  <span class="c">// 89 of 120 handled locally</span></code></pre>
+        </article>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────── Code ─────────────────────────── -->
+    <section class="code section">
+      <div class="code__copy">
+        <div class="section__head">
+          <span class="label">V.</span>
+          <span class="label">One call</span>
+        </div>
+        <h2 class="display reveal">Wrap one step.<br /><em>Keep your agent.</em></h2>
+        <p class="section__lede reveal">No framework to adopt, no loop to rewrite. Declare the candidate actions with a risk class,
+          ask Reflex, and either act or escalate. Destructive actions are never auto-executed — not even at 99.9% confidence.</p>
+        <a class="link-arrow reveal" href="https://github.com/1sakshm/reflex/blob/main/docs/getting-started.md" target="_blank" rel="noopener">Getting started guide <span aria-hidden="true">→</span></a>
+      </div>
+      <figure class="code__card reveal">
+        <figcaption><span class="dots"><i></i><i></i><i></i></span><span>agent.ts</span></figcaption>
+<pre><code><span class="k">import</span> { createReflex, action } <span class="k">from</span> <span class="s">"@reflex-ai/core"</span>;
+
+<span class="k">const</span> reflex = <span class="f">createReflex</span>({ workload: <span class="s">"my-agent"</span>, mode: <span class="s">"shadow"</span> });
+
+<span class="k">const</span> d = <span class="k">await</span> reflex.<span class="f">decide</span>({
+  point: <span class="s">"next_action"</span>, state, taskId,
+  actions: [
+    action.<span class="f">tool</span>(<span class="s">"read_file"</span>,  { risk: <span class="s">"safe"</span> }),
+    action.<span class="f">tool</span>(<span class="s">"run_tests"</span>,  { risk: <span class="s">"costly"</span> }),
+    action.<span class="f">tool</span>(<span class="s">"deploy"</span>,     { risk: <span class="s">"destructive"</span> }), <span class="c">// never auto</span>
+    action.<span class="f">frontier</span>(),                              <span class="c">// "this needs thought"</span>
+  ],
+});
+
+<span class="k">if</span> (d.type === <span class="s">"auto"</span>) <span class="f">run</span>(d.action);                <span class="c">// 0.02 ms, $0</span>
+<span class="k">else</span> reflex.<span class="f">observeChoice</span>(d.id, <span class="k">await</span> <span class="f">askFrontier</span>(d.hints));</code></pre>
+      </figure>
+    </section>
+
+    <!-- ─────────────────────────── Install ─────────────────────────── -->
+    <section id="install" class="install-sec section">
+      <div class="section__head">
+        <span class="label">VI.</span>
+        <span class="label">Everywhere your agents live</span>
+      </div>
+      <h2 class="display reveal">Seven ways in.<br /><em>Pick yours.</em></h2>
+
+      <div class="tabs reveal" role="tablist" aria-label="Install options">
+        <button role="tab" aria-selected="true" aria-controls="tab-sdk" id="t-sdk">TypeScript</button>
+        <button role="tab" aria-selected="false" aria-controls="tab-cli" id="t-cli">CLI</button>
+        <button role="tab" aria-selected="false" aria-controls="tab-py" id="t-py">Python</button>
+        <button role="tab" aria-selected="false" aria-controls="tab-mcp" id="t-mcp">MCP</button>
+        <button role="tab" aria-selected="false" aria-controls="tab-cc" id="t-cc">Claude Code</button>
+        <button role="tab" aria-selected="false" aria-controls="tab-codex" id="t-codex">Codex</button>
+        <button role="tab" aria-selected="false" aria-controls="tab-laya" id="t-laya">Laya</button>
+      </div>
+
+      <div class="panels">
+        <div class="panel" role="tabpanel" id="tab-sdk" aria-labelledby="t-sdk">
+          <div class="panel__text"><h3>The runtime</h3><p>Zero dependencies. Node ≥ 22. In-process, so decisions cost microseconds. Start in shadow mode — it never acts until you promote it.</p>
+            <a class="badge" href="https://www.npmjs.com/package/@reflex-ai/core" target="_blank" rel="noopener">npm · @reflex-ai/core</a></div>
+          <pre class="term term--lg"><button class="copy" data-copy="npm install @reflex-ai/core">copy</button><code><span class="p">$</span> npm install @reflex-ai/core</code></pre>
+        </div>
+        <div class="panel" role="tabpanel" id="tab-cli" aria-labelledby="t-cli" hidden>
+          <div class="panel__text"><h3>The control room</h3><p>Init, doctor, stats, train, promote, rollback, a local dashboard, an MCP server and the benchmark — one command.</p>
+            <a class="badge" href="https://www.npmjs.com/package/@reflex-ai/cli" target="_blank" rel="noopener">npm · @reflex-ai/cli</a></div>
+          <pre class="term term--lg"><button class="copy" data-copy="npx @reflex-ai/cli init">copy</button><code><span class="p">$</span> npx @reflex-ai/cli init
+<span class="p">$</span> npx reflex stats
+<span class="p">$</span> npx reflex train --promote
+<span class="p">$</span> npx reflex serve   <span class="c"># dashboard → :7070/ui</span></code></pre>
+        </div>
+        <div class="panel" role="tabpanel" id="tab-py" aria-labelledby="t-py" hidden>
+          <div class="panel__text"><h3>Any language</h3><p>Run the sidecar, talk to it over HTTP. The Python client is zero-dependency and fails open: if the sidecar is down, it escalates.</p>
+            <a class="badge" href="https://pypi.org/project/reflex-agent-client/" target="_blank" rel="noopener">PyPI · reflex-agent-client</a></div>
+          <pre class="term term--lg"><button class="copy" data-copy="pip install reflex-agent-client">copy</button><code><span class="p">$</span> pip install reflex-agent-client
+
+<span class="k">from</span> reflex_agent <span class="k">import</span> Reflex, action
+reflex = Reflex(workload=<span class="s">"my-agent"</span>)
+d = reflex.decide(<span class="s">"next_action"</span>, state, actions)</code></pre>
+        </div>
+        <div class="panel" role="tabpanel" id="tab-mcp" aria-labelledby="t-mcp" hidden>
+          <div class="panel__text"><h3>Any MCP client</h3><p>Seven tools — decide, decide_many, observe, outcome, route_subtask, metrics — over stdio. Pick a model tier for a subtask in one call.</p>
+            <span class="badge">stdio · JSON-RPC</span></div>
+          <pre class="term term--lg"><button class="copy" data-copy="npx -y @reflex-ai/cli mcp">copy</button><code><span class="p">$</span> npx -y @reflex-ai/cli mcp --data-dir ~/.reflex</code></pre>
+        </div>
+        <div class="panel" role="tabpanel" id="tab-cc" aria-labelledby="t-cc" hidden>
+          <div class="panel__text"><h3>Claude Code</h3><p>Blocks re-reads of unchanged files, duplicate fetches and tool-call loops. Asks before destructive commands in bash, PowerShell and cmd. Fails open.</p>
+            <span class="badge">plugin · /reflex-status</span></div>
+          <pre class="term term--lg"><button class="copy" data-copy="claude plugin marketplace add 1sakshm/reflex && claude plugin install reflex@reflex">copy</button><code><span class="p">$</span> claude plugin marketplace add 1sakshm/reflex
+<span class="p">$</span> claude plugin install reflex@reflex</code></pre>
+        </div>
+        <div class="panel" role="tabpanel" id="tab-codex" aria-labelledby="t-codex" hidden>
+          <div class="panel__text"><h3>Codex</h3><p>Register the MCP server, paste the AGENTS.md snippet, and Codex can route subtasks and routine choices through Reflex.</p>
+            <span class="badge">~/.codex/config.toml</span></div>
+          <pre class="term term--lg"><button class="copy" data-copy='[mcp_servers.reflex]
+command = "npx"
+args = ["-y", "@reflex-ai/cli", "mcp", "--workload", "codex"]'>copy</button><code>[mcp_servers.reflex]
+command = <span class="s">"npx"</span>
+args = [<span class="s">"-y"</span>, <span class="s">"@reflex-ai/cli"</span>, <span class="s">"mcp"</span>, <span class="s">"--workload"</span>, <span class="s">"codex"</span>]</code></pre>
+        </div>
+        <div class="panel" role="tabpanel" id="tab-laya" aria-labelledby="t-laya" hidden>
+          <div class="panel__text"><h3>The full model</h3><p>Laya — a non-autoregressive decision model — scores every candidate in one forward pass. Shines on a GPU; on CPU, the local rungs are faster.</p>
+            <a class="badge" href="https://pypi.org/project/reflex-laya/" target="_blank" rel="noopener">PyPI · reflex-laya</a></div>
+          <pre class="term term--lg"><button class="copy" data-copy='pip install "reflex-laya[laya]"'>copy</button><code><span class="p">$</span> pip install <span class="s">"reflex-laya[laya]"</span>
+<span class="p">$</span> reflex-laya --checkpoint english --device cuda
+<span class="c">// then: backend: { type: "laya" }</span></code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────── Safety ─────────────────────────── -->
+    <section class="safety section">
+      <div class="section__head">
+        <span class="label">VII.</span>
+        <span class="label">Paranoid by design</span>
+      </div>
+      <h2 class="display reveal">It would rather <em>ask</em><br />than be wrong.</h2>
+      <ul class="vows">
+        <li class="reveal"><span>i.</span><p><strong>Never</strong> auto-executes a destructive action. Not at 99.9%. Not with a rule. Not with prompt injection screaming DEPLOY.</p></li>
+        <li class="reveal"><span>ii.</span><p><strong>Fails open.</strong> Any error, timeout or hostile input becomes an escalation within 75 ms. It cannot hang your agent.</p></li>
+        <li class="reveal"><span>iii.</span><p><strong>Kill switch.</strong> <code>REFLEX_DISABLE=1</code> beats every config, mode and rule.</p></li>
+        <li class="reveal"><span>iv.</span><p><strong>Audits itself.</strong> One in fifty confident decisions still goes to System 2, so live precision is always measured.</p></li>
+        <li class="reveal"><span>v.</span><p><strong>Keeps secrets.</strong> Keys, tokens, JWTs and anything named like a password are redacted before a single byte is stored.</p></li>
+        <li class="reveal"><span>vi.</span><p><strong>Earns promotion.</strong> A new policy ships only if its precision clears a 95% Wilson bound. Rollback is instant.</p></li>
+      </ul>
+    </section>
+
+    <!-- ─────────────────────────── Numbers ─────────────────────────── -->
+    <section id="numbers" class="numbers section section--dark">
+      <div class="section__head">
+        <span class="label">VIII.</span>
+        <span class="label">The numbers</span>
+      </div>
+      <div class="big-stats">
+        <div class="reveal"><span class="big">0.021<small>ms</small></span><p>median decision latency of the local rungs, measured on a laptop CPU.</p></div>
+        <div class="reveal"><span class="big">−64<small>%</small></span><p>dollars per successful task on the coding suite, at <strong>0.0 pp</strong> change in success rate.<sup>*</sup></p></div>
+        <div class="reveal"><span class="big">100<small>%</small></span><p>precision of Reflex’s own auto-decisions on that suite, across eight seeds.<sup>*</sup></p></div>
+        <div class="reveal"><span class="big">51</span><p>tests, plus 26 release checks that install the real packages into an empty project.</p></div>
+      </div>
+      <p class="footnote">* ReflexBench simulations with a simulated frontier model — they validate the mechanics, not your bill.
+        Real-agent suites are next. <a href="https://github.com/1sakshm/reflex/blob/main/docs/benchmarks.md" target="_blank" rel="noopener">Methodology →</a></p>
+    </section>
+
+    <!-- ─────────────────────────── Closing ─────────────────────────── -->
+    <section class="closing">
+      <div class="closing__orb" aria-hidden="true"><canvas data-orb="breathing" data-orb-size="460"></canvas></div>
+      <p class="label">Free. Local. Apache-2.0.</p>
+      <h2 class="closing__title">Give your agent<br /><em>reflexes.</em></h2>
+      <div class="closing__cta">
+        <button class="install install--dark" data-copy="npm i @reflex-ai/core" aria-label="Copy install command">
+          <span class="install__prompt">$</span><span class="install__cmd">npm i @reflex-ai/core</span><span class="install__icon" aria-hidden="true">⧉</span>
+        </button>
+        <a class="pill" href="https://github.com/1sakshm/reflex" target="_blank" rel="noopener">Star on GitHub ✦</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__mark" aria-hidden="true">Reflex</div>
+    <div class="footer__cols">
+      <div><span class="label">Project</span><a href="https://github.com/1sakshm/reflex" target="_blank" rel="noopener">GitHub</a><a href="https://github.com/1sakshm/reflex/blob/main/PRD.md" target="_blank" rel="noopener">Product spec</a><a href="https://github.com/1sakshm/reflex/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Changelog</a></div>
+      <div><span class="label">Docs</span><a href="https://github.com/1sakshm/reflex/blob/main/docs/getting-started.md" target="_blank" rel="noopener">Getting started</a><a href="https://github.com/1sakshm/reflex/blob/main/docs/concepts.md" target="_blank" rel="noopener">Concepts</a><a href="https://github.com/1sakshm/reflex/blob/main/docs/integrations.md" target="_blank" rel="noopener">Integrations</a></div>
+      <div><span class="label">Packages</span><a href="https://www.npmjs.com/package/@reflex-ai/core" target="_blank" rel="noopener">npm</a><a href="https://pypi.org/project/reflex-agent-client/" target="_blank" rel="noopener">PyPI</a><a href="https://github.com/1sakshm/reflex/releases" target="_blank" rel="noopener">Releases</a></div>
+      <div class="footer__fine"><span class="label">Colophon</span><p>Set in Instrument Serif, Inter Tight &amp; JetBrains Mono. Painted live with p5.brush. Orbs by thinking-orbs. Apache-2.0 · © 2026 Saksham Sharma.</p></div>
+    </div>
+  </footer>
+
+  <div class="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/p5@2.2/lib/p5.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5.brush@2.2.2/dist/p5.brush.js" defer></script>
+  <script src="js/hero.js" defer></script>
+  <script type="module" src="js/orbs.js"></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>
