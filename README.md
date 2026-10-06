@@ -15,7 +15,7 @@ npm install @reflex-ai/core            # zero-dependency runtime
 npx @reflex-ai/cli init                # optional CLI: init · stats · train · serve · mcp · bench
 ```
 
-**Website:** [1sakshm.github.io/reflex](https://1sakshm.github.io/reflex/) · **Docs:** [Getting started](docs/getting-started.md) · [Concepts](docs/concepts.md) · [Configuration](docs/configuration.md) · [API](docs/api.md) · [Integrations](docs/integrations.md) · [Benchmarks](docs/benchmarks.md) · [FAQ](docs/faq.md) · [Product spec (PRD)](PRD.md)
+**Website:** [https://getreflex.pages.dev/](https://getreflex.pages.dev/) · **Docs:** [Getting started](docs/getting-started.md) · [Concepts](docs/concepts.md) · [Configuration](docs/configuration.md) · [API](docs/api.md) · [Integrations](docs/integrations.md) · [Benchmarks](docs/benchmarks.md) · [FAQ](docs/faq.md) · [Product spec (PRD)](PRD.md)
 
 ```text
  agent state ──▶ REFLEX ladder (stops at the first confident tier)
