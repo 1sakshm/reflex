@@ -40,9 +40,12 @@ try {
     // `npm publish` validates package.json more strictly than `npm pack` (e.g. it silently drops
     // bin entries it considers invalid), so dry-run the real publish and reject any auto-correction.
     const dryRun = run(npm, ["publish", "--dry-run", "--provenance=false"], join(root, "packages", pkg));
+    // "cannot publish over the previously published version" just means this version is already
+    // live (e.g. re-running a release); the manifest validation above it still ran.
+    const alreadyPublished = /cannot publish over the previously published/i.test(dryRun.out);
     check(
-      `npm publish --dry-run @reflex-ai/${pkg}: no errors or auto-corrections`,
-      dryRun.code === 0 && !/auto-corrected|was invalid|EUSAGE/i.test(dryRun.out),
+      `npm publish --dry-run @reflex-ai/${pkg}: no errors or auto-corrections${alreadyPublished ? " (version already on npm)" : ""}`,
+      (dryRun.code === 0 || alreadyPublished) && !/auto-corrected|was invalid|EUSAGE/i.test(dryRun.out),
       dryRun.out,
     );
     const result = run(npm, ["pack", "--json", "--pack-destination", packs], join(root, "packages", pkg));
