@@ -28,7 +28,7 @@
   },
   "type": "module",
   "bin": {
-    "reflex": "./dist/bin.js"
+    "reflex": "dist/bin.js"
   },
   "exports": {
     ".": {
@@ -51,8 +51,7 @@
     "@reflex-ai/server": "0.1.0"
   },
   "publishConfig": {
-    "access": "public",
-    "provenance": true
+    "access": "public"
   },
   "peerDependencies": {
     "@types/node": ">=22"

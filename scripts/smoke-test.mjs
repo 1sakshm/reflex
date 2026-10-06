@@ -37,6 +37,14 @@ try {
   execFileSync(isWin ? "cmd" : "mkdir", isWin ? ["/c", "mkdir", packs, app] : ["-p", packs, app]);
   // 1. Pack (what `npm publish` would upload).
   for (const pkg of ["core", "server", "bench", "cli"]) {
+    // `npm publish` validates package.json more strictly than `npm pack` (e.g. it silently drops
+    // bin entries it considers invalid), so dry-run the real publish and reject any auto-correction.
+    const dryRun = run(npm, ["publish", "--dry-run", "--provenance=false"], join(root, "packages", pkg));
+    check(
+      `npm publish --dry-run @reflex-ai/${pkg}: no errors or auto-corrections`,
+      dryRun.code === 0 && !/auto-corrected|was invalid|EUSAGE/i.test(dryRun.out),
+      dryRun.out,
+    );
     const result = run(npm, ["pack", "--json", "--pack-destination", packs], join(root, "packages", pkg));
     check(`npm pack @reflex-ai/${pkg}`, result.code === 0, result.out);
     let files = [];
